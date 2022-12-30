@@ -8,3 +8,9 @@ def about(request):
 
 def contact(request):
     return render(request, 'contact.html')
+
+def userInfo(request):
+    return render(request, 'userInfo.html')
+
+def garments(request):
+    return render(request, 'garments.html')
