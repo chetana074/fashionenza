@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %} User Info {% endblock title %}
+
+{% block body %}
+
+<div class="container">
+    <div class="jumbotron my-5">
+        <P style="font-family:Georgia, 'Times New Roman', Times, serif; text-align: center; font-size: 60px;">
+          <b>FashionEnza</b>
+        </P>
+    </div>
+
+    <div class="container">
+        <form>
+            <table class="table">
+                <tbody>
+                  <tr>
+                    <td>
+                        <label for="height">Enter Height</label>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" id="height" aria-describedby="heightHelp" placeholder="Enter height" style="width:fit-content;">
+                        <small id="heightHelp" class="form-text text-muted">Please enter height in cm</small>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                        <label for="weight">Enter Weight</label>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" id="weight" aria-describedby="weightHelp" placeholder="Enter weight" style="width:fit-content;">
+                        <small id="weightHelp" class="form-text text-muted">Please enter weight in kg</small>
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
+            <div class="container">
+                <p class="lead" style="text-align: center;">
+                    <a href="/garments" class="btn btn-outline-secondary btn-lg active" role="button" aria-pressed="true">Submit</a>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock body %} 
