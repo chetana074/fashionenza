@@ -1,6 +1,10 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.core.files.storage import FileSystemStorage
+from django.http import JsonResponse
+from fashionenzaApp import imagecapture
+# import imagecapture
 
 def welcome(request):
     return render(request, 'welcome.html')
@@ -78,8 +82,19 @@ def about(request):
 def contact(request):
     return render(request, 'contact.html')
 
-def tryon(request):
-    return render(request, 'tryon.html')
+def upload(request):
+    if request.method == 'POST' and request.FILES['upload']:
+        upload = request.FILES['upload']
+        fss = FileSystemStorage(location='User_Uploaded_photos')
+        file = fss.save(upload.name, upload)
+        file_url = fss.url(file)
+        return render(request, 'upload.html', {'file_url': file_url})
+    return render(request, 'upload.html')
+
+def upload(request):
+    if request.method == 'POST' and 'capture' in request.POST: 
+        text = imagecapture.dummy()
+    return render(request,'upload.html') 
 
 def userInfo(request):
     return render(request, 'userInfo.html')
