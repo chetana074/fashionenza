@@ -91,10 +91,13 @@ def upload(request):
         return render(request, 'upload.html', {'file_url': file_url})
     return render(request, 'upload.html')
 
+def garments(request):
+    return(request,'garments.html')
+
 def upload(request):
     if request.method == 'POST' and 'capture' in request.POST: 
         text = imagecapture.dummy()
-    return render(request,'upload.html') 
+    return render(request,'garments.html') 
 
 def userInfo(request):
     return render(request, 'userInfo.html')
