@@ -13,9 +13,13 @@
                   <br>
                   <button class="btn btn-dark my-4" type="submit" >Submit</button>
             </form>
+            Click the below button to capture the photo of yourself for virtual try-on
+            <div>
+            To save the image click s otherwise click q :
+            </div>
             <form method="post" enctype="multipart/form-data"> 
                 {% csrf_token %} 
-                <button type="submit" name="capture">run</button> 
+                <button type="submit" name="capture">Capture</button> 
             </form> 
     </div>
 {% endblock body %} 
