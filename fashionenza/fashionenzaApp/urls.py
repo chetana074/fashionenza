@@ -2,6 +2,11 @@ from django.contrib import admin
 from django.urls import path
 from fashionenzaApp import views
 
+#Django admin header customization
+admin.site.site_header = "Administrator Login"
+admin.site.site_title = ""
+admin.site.index_title = "Welcome to the Admin Portal"
+
 urlpatterns = [
     path('', views.welcome, name='welcome'),
     path('signup', views.signup, name='signup'),

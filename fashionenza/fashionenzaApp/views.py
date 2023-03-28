@@ -1,56 +1,38 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.core.files.storage import FileSystemStorage
 from django.http import JsonResponse
 from fashionenzaApp import imagecapture
-# import imagecapture
+
+loggedIn = False
 
 def welcome(request):
     return render(request, 'welcome.html')
 
-def validate_password(s):
-    l, u, p, d = 0, 0, 0, 0
-    if (len(s) >= 8):
-        for i in s:
-            
-            # counting lowercase alphabets
-            if (i.islower()):
-                l+=1           
-    
-            # counting uppercase alphabets
-            if (i.isupper()):
-                u+=1           
-    
-            # counting digits
-            if (i.isdigit()):
-                d+=1           
-    
-            # counting the mentioned special characters
-            if(i=='@'or i=='$' or i=='_'):
-                p+=1          
-
-    if (l>=1 and u>=1 and p>=1 and d>=1 and l+p+u+d==len(s)):
-        return True
-    else:
-        return False
-    
 def signup(request):
     if request.method == "POST":
         username = request.POST['username']
         fname = request.POST['fname']
         lname = request.POST['lname']
         email = request.POST['email']
-        password1 = request.POST['password1']
-        password2 = request.POST['password2']
+        password = request.POST['password1']
 
-        newUser = User.objects.create_user(username, email, password1)
-        newUser.first_name = fname
-        newUser.last_name = lname
-        newUser.save()
-
-        return redirect('signin')
-
+        if User.objects.filter(username=username).exists():
+            messages.error(request, "This username is taken")
+            return render(request, 'signup.html')
+        elif User.objects.filter(email=email).exists():
+            messages.error(request, "This email is taken")
+            return render(request, 'signup.html')
+        else:
+            newUser = User.objects.create_user(username, email, password)
+            newUser.first_name = fname
+            newUser.last_name = lname
+            newUser.save()
+            messages.success(request, "User registered successfully!!!")
+            return redirect('signin')
+        
     return render(request, 'signup.html')
 
 def signin(request):
@@ -62,37 +44,55 @@ def signin(request):
 
         if user is not None:
             login(request, user)
+            username = user.username
             fname = user.first_name
-            return render(request, 'home.html', {'fname':fname})
+            loggedIn = True
+            return render(request, 'home.html', {'fname':fname, 'username':username, 'loggedIn':loggedIn})
         else:
+            messages.error(request, "User is not registered!!! Please sign up first.")
             return redirect('welcome')
-
     return render(request, 'signin.html')
 
 def signout(request):
+    loggedIn = False
     logout(request)
     return redirect('welcome')
 
 def home(request):
-    return render(request, 'home.html')
-
+    if(loggedIn):
+        return render(request, 'home.html')
+    else:
+        return redirect('welcome')
+    
 def about(request):
-    return render(request, 'about.html')
+    if(loggedIn):
+        return render(request, 'about.html')
+    else:
+        return redirect('welcome')
 
 def contact(request):
-    return render(request, 'contact.html')
+    if(loggedIn):
+        return render(request, 'contact.html')
+    else:
+        return redirect('welcome')
 
 def upload(request):
-    if request.method == 'POST' and request.FILES['upload']:
-        upload = request.FILES['upload']
-        fss = FileSystemStorage(location='User_Uploaded_photos')
-        file = fss.save(upload.name, upload)
-        file_url = fss.url(file)
-        return render(request, 'upload.html', {'file_url': file_url})
-    return render(request, 'upload.html')
+    if(loggedIn):
+        if request.method == 'POST' and request.FILES['upload']:
+            upload = request.FILES['upload']
+            fss = FileSystemStorage(location='User_Uploaded_photos')
+            file = fss.save(upload.name, upload)
+            file_url = fss.url(file)
+            return render(request, 'upload.html', {'file_url': file_url})
+        return render(request, 'upload.html')
+    else:
+        return redirect('welcome')
 
 def garments(request):
-    return(request,'garments.html')
+    if(loggedIn):
+        return(request,'garments.html')
+    else:
+        return redirect('welcome')
 
 def upload(request):
     if request.method == 'POST' and 'capture' in request.POST: 
@@ -100,4 +100,7 @@ def upload(request):
     return render(request,'garments.html') 
 
 def userInfo(request):
-    return render(request, 'userInfo.html')
+    if(loggedIn):
+        return render(request, 'userInfo.html')
+    else:
+        return redirect('welcome')
