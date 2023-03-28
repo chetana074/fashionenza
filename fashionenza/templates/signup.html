@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
@@ -7,11 +8,28 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' href="static\CSS\login.css">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <style>
+        .input-style {
+            margin: 0;
+        }
+
+        .hidden {
+            visibility: hidden;
+        }
+    </style>
 </head>
+
 <body>
     <div class="container-fluid">
         <div class="row">
@@ -29,47 +47,187 @@
                 <center>
                     <h1><u>SignUp here</u></h1>
                 </center>
-                <br> 
+
                 <form action="/signup" method="post">
-                    {% csrf_token %} 
-                    <div class="form-group">
+                    {% csrf_token %} <!-- implemented to avoid malicious attacks -->
+
+                    <div class="form-group input-style">
                         <label form="name">Username : </label>
-                        <input type="text" id="username" class="form-control" name="username" placeholder="Create a username (only letters and numbers)" required>
+                        <input type="text" id="username" class="form-control" name="username"
+                            placeholder="Create a username (only letters and numbers)" required onblur="validateUsername()">
+                        <label id="usernameLabel" for="username" class="hidden">Enter strong username</label>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group input-style">
                         <label for="">FirstName : </label>
-                        <input type="text" id="fname" class="form-control" name="fname" placeholder="Enter your First Name" required>
+                        <input type="text" id="fname" class="form-control" name="fname"
+                            placeholder="Enter your First Name" required onblur="validateFirstName()">
+                        <label id="fnameLabel" for="fname" class="hidden">Enter valid firstname</label>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group input-style">
                         <label for="">LastName : </label>
-                        <input type="text" id="lname" class="form-control" name="lname" placeholder="Enter your Last Name" required>
+                        <input type="text" id="lname" class="form-control" name="lname"
+                            placeholder="Enter your Last Name" required onblur="validateLastName()">
+                        <label id="lnameLabel" for="lname" class="hidden">Enter valid lastname</label>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group input-style">
                         <label for="">Email : </label>
-                        <input type="email" id="email" class="form-control" name="email" placeholder="Enter your email address" required>
+                        <input type="email" id="email" class="form-control" name="email"
+                            placeholder="Enter your email address" required onblur="validateEmail()">
+                        <label id="emailLabel" for="email" class="hidden">Provide valid email</label>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group input-style">
                         <label for="">Password : </label>
-                        <input type="password" id="password1" class="form-control" name="password1" placeholder="Enter password" required>
+                        <input type="password" id="password1" class="form-control" name="password1"
+                            placeholder="Enter password" required onblur="validatePassword()">
+                        <label id="password1Label" for="password1" class="hidden">Enter strong password</label>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group input-style">
                         <label for="">Confirm Password : </label>
-                        <input type="password" id="password2" class="form-control" name="password2" placeholder="Confirm password" required>
+                        <input type="password" id="password2" class="form-control" name="password2"
+                            placeholder="Confirm password" required onblur="matchPassword()">
+                        <label id="password2Label" for="password2" class="hidden">Passwords don't match</label>
                     </div>
-
-                    <br>
 
                     <center>
                         <button type="submit" class="btn btn-success">SignUp</button>
                     </center>
                 </form>
+                    <div id="snackbar" class="show">
+                        {% for message in messages %}
+                            <li>{{message}}</li>
+                        {% endfor %}
+                    </div>
             </div>
         </div>
     </div>
+    <script>
+        let userNameValidated = false
+        let firstNameValidated = false
+        let lastNameValidated = false
+        let emailValidated = false
+        let passwordValidated = false
+        let passwordMatched = false
+
+        const userNameRegEx = new RegExp("^[a-zA-Z0-9_.]{6,15}$");
+        const nameRegEx = new RegExp("^[A-Za-z]+$");
+        const emailRegEx = new RegExp("[a-z0-9]+@[a-z]+\.[a-z]{2,3}");
+        const passwordRegEx = new RegExp("^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.*[a-z])[a-zA-Z0-9!@#$%^&*]{6,15}$");
+
+        function validateUsername(){
+            let usernameLabel = document.getElementById("usernameLabel");
+            let username = document.getElementById("username").value;
+            
+            if (username != "") {
+                if (userNameRegEx.test(username)) {
+                    usernameLabel.className = "hidden"
+                    userNameValidated = true
+                }
+                else{
+                    usernameLabel.className = ""
+                    usernameLabel.style.color = "red";
+
+                    alert("1. Username can consist of alphabets and digits only.\n2. Username length must be between 6 to 15 characters.")
+                }
+            }
+        }
+
+        function validateFirstName(){
+            let firstNameLabel = document.getElementById("fnameLabel");
+            let firstName = document.getElementById("fname").value;
+
+            if (firstName != "") {
+                if (nameRegEx.test(firstName)) {
+                    firstNameLabel.className = "hidden"
+                    firstNameValidated = true
+                }
+                else{
+                    firstNameLabel.className = ""
+                    firstNameLabel.style.color = "red";
+
+                    alert("Firstname can consist of only alphabets.")
+                }
+            }
+        }
+
+        function validateLastName(){
+            let lastNameLabel = document.getElementById("lnameLabel");
+            let lastName = document.getElementById("lname").value;
+
+            if (lastName != "") {
+                if (nameRegEx.test(lastName)) {
+                    lastNameLabel.className = "hidden"
+                    lastNameValidated = true
+                }
+                else{
+                    lastNameLabel.className = ""
+                    lastNameLabel.style.color = "red";
+
+                    alert("Lastname can consist of only alphabets.")
+                }
+            }
+        }
+
+        function validateEmail() {
+            let emailLabel = document.getElementById("emailLabel");
+            let email = document.getElementById("email").value;
+
+            if (email != "") {
+                if (emailRegEx.test(email)) {
+                    emailLabel.className = "hidden"
+                    emailValidated = true
+                }
+                else{
+                    emailLabel.className = ""
+                    emailLabel.style.color = "red";
+                }
+            }
+        }
+
+        function validatePassword(){
+            let password1Label = document.getElementById("password1Label");
+            let password1 = document.getElementById("password1").value;
+
+            if (password1 != "") {
+                if (passwordRegEx.test(password1)) {
+                    password1Label.className = "hidden"
+                    passwordValidated = true
+                }
+                else{
+                    password1Label.className = ""
+                    password1Label.style.color = "red";
+
+                    alert("Password must contain : \n1. Atleast one uppercase \n2. Atleat one lowercase \n3. Atleast one digit \n4. Atleast one special character \n5. Length must be between 6 to 15 characters")
+                }
+            }
+        }
+
+        function matchPassword(){
+            let password2Label = document.getElementById("password2Label");
+            let password1 = document.getElementById("password1").value;
+            let password2 = document.getElementById("password2").value;
+
+            if (password2 != "") {
+                if (password1 == password2) {
+                    password2Label.className = "hidden"
+                    passwordMatched = true
+                }
+                else{
+                    password2Label.className = ""
+                    password2Label.style.color = "red";
+                }
+            }
+        }
+
+        // function myFunction() {
+        //     var x = document.getElementById("snackbar");
+        //     x.className = "show";
+        //     setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+        // }
+    </script>
 </body>
 </html>

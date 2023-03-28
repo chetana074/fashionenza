@@ -2,4 +2,22 @@
 
 {% block title %} Contact {% endblock title %}
 
-{% block body %} This is contact page {% endblock body %} 
+{% block body %} 
+<div class="cont-contactBtn">
+    <div class="cont-flip">
+        <div class="front">
+            <a href="#" class="btn btn-white flip">Send Message</a>
+        </div>
+        <div class="back">
+            <a href="#" class="flip close"></a>
+            <form class="contact-form" action="">
+                <input class="gutter" type="text" placeholder="Name">
+                <input type="text" placeholder="Company">
+                <input class="gutter" type="text" placeholder="Telephone">
+                <input type="text" placeholder="Email">
+                <textarea name="" id="" placeholder="Leave a message"></textarea>
+                <input type="submit" value="Send">
+            </form>
+        </div>
+    </div>
+{% endblock body %} 
