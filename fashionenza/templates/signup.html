@@ -4,7 +4,7 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>SignUp</title>
+    <title>Sign up</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' href="static\CSS\login.css">
 
@@ -31,10 +31,10 @@
 </head>
 
 <body>
-    <div class="container-fluid">
+    <div class="container-fluid" style="position:relative">
         <div class="row">
             <div class="col-md-6" style="padding: 0%">
-                <img src="static\images\SignIn_SignUp_bg.jpg" class="imgLeft">
+                <img src="static\images\signin_signup_bg.jpg" class="imgLeft">
                 <div class="txtLeft">
                     <div>
                         <h2>Discover the new you!!</h2>
@@ -45,7 +45,7 @@
             <div class="col-md-6">
                 <br>
                 <center>
-                    <h1><u>SignUp here</u></h1>
+                    <h1><u>Sign up here</u></h1>
                 </center>
 
                 <form action="/signup" method="post">
@@ -94,15 +94,20 @@
                     </div>
 
                     <center>
-                        <button type="submit" class="btn btn-success">SignUp</button>
+                        <button type="submit" class="btn btn-success">Sign up</button>
                     </center>
                 </form>
-                    <div id="snackbar" class="show">
-                        {% for message in messages %}
-                            <li>{{message}}</li>
-                        {% endfor %}
-                    </div>
             </div>
+        </div>
+        <div style="position:absolute; top:0px; left:0px; width:50%">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    <strong>Message : </strong> {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
         </div>
     </div>
     <script>
@@ -222,12 +227,6 @@
                 }
             }
         }
-
-        // function myFunction() {
-        //     var x = document.getElementById("snackbar");
-        //     x.className = "show";
-        //     setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-        // }
     </script>
 </body>
 </html>

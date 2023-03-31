@@ -3,7 +3,7 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>SignIn</title>
+    <title>Sign in</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' href="static\CSS\login.css">
 
@@ -13,21 +13,21 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="container-fluid">
+    <div class="container-fluid" style="position:relative">
         <div class="row">
             <div class="col-md-6" style="padding: 0%">
-                <img src="static\images\SignIn_SignUp_bg.jpg" class="imgLeft">
+                <img src="static\images\signin_signup_bg.jpg" class="imgLeft">
                 <div class="txtLeft">
                     <div> 
                         <h2>Choose perfect Outfit!!!</h2>
-                        <h6>SignIn to get started...</h6>    
+                        <h6>Sign in to get started...</h6>    
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <br>
                 <center>
-                    <h1><u>SignIn here</u></h1>
+                    <h1><u>Sign in here</u></h1>
                 </center>
 
                 <br> 
@@ -45,11 +45,31 @@
                     </div>
 
                     <center>
-                        <button type="submit" class="btn btn-success">SignIn</button>
+                        <button type="submit" class="btn btn-success">Sign in</button>
                     </center>
                 </form>
             </div>
         </div>
+        <div style="position:absolute; top:0px; left:0px; width:50%">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                <strong>Message : </strong> {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+        </div>
     </div>
+    <script>
+        //if msg.tag is success then update details as user logged in. username, email
+        console.log({{message.tags}})
+        //if ( {{message.tags}} == "success" ){
+        //    console.log("user logged in")
+        //    document.setItem("useLoggedIn","Yes")
+            //document.setItem("useLoggedIn","Yes")
+            //document.setItem("useLoggedIn","Yes")
+        //}
+    </script>
 </body>
 </html>
