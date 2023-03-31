@@ -59,6 +59,7 @@ def signout(request):
     return redirect('welcome')
 
 def home(request):
+    print("loggedIn" + loggedIn)
     if(loggedIn):
         return render(request, 'home.html')
     else:
@@ -76,17 +77,20 @@ def contact(request):
     else:
         return redirect('welcome')
 
+
 def upload(request):
-    if(loggedIn):
-        if request.method == 'POST' and request.FILES['upload']:
-            upload = request.FILES['upload']
-            fss = FileSystemStorage(location='User_Uploaded_photos')
-            file = fss.save(upload.name, upload)
-            file_url = fss.url(file)
-            return render(request, 'upload.html', {'file_url': file_url})
-        return render(request, 'upload.html')
-    else:
-        return redirect('welcome')
+    if request.method=='POST' and 'garm' in request.POST:
+        upload=request.FILES['gar']
+        fss=FileSystemStorage(location='Garment_by_user')
+        fss.save(upload.name, upload)
+    if request.method=='POST' and 'your' in request.POST: 
+        up=request.FILES['you']
+        fss=FileSystemStorage(location='User_photo')
+        fss.save(up.name, up) 
+    # if request.method=='POST' and 'capture' in request.POST: 
+    #     imagecapture.dummy()
+    return render(request,'upload.html')
+
 
 def garments(request):
     if(loggedIn):
@@ -97,7 +101,7 @@ def garments(request):
 def upload(request):
     if request.method == 'POST' and 'capture' in request.POST: 
         text = imagecapture.dummy()
-    return render(request,'garments.html') 
+    return render(request,'upload.html') 
 
 def userInfo(request):
     if(loggedIn):
