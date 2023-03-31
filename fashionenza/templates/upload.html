@@ -3,23 +3,28 @@
 {% block title %} Upload Image {% endblock title %}
 
 {% block body %} 
-    <div class="container">
+<div class="container">
 
-            <!--Simple Form-->
-            <h2 class="my-4">Upload the image of garment</h2>
-            <form method="post" enctype="multipart/form-data">
-              {% csrf_token %}
-                  <input type="file" name="upload" accept="image/*" >
-                  <br>
-                  <button class="btn btn-dark my-4" type="submit" >Submit</button>
-            </form>
-            Click the below button to capture the photo of yourself for virtual try-on
-            <div>
-            To save the image click s otherwise click q :
-            </div>
-            <form method="post" enctype="multipart/form-data"> 
-                {% csrf_token %} 
-                <button type="submit" name="capture">Capture</button> 
-            </form> 
+    <!--Simple Form-->
+    <h2 class="my-4">Upload the image of garment</h2>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+          <input type="file" name="gar" accept="image/*" >
+          <br>
+          <button class="btn btn-dark my-4" name ="garm"type="submit" >Submit</button>
+          <h2 class="my-4">Upload the image of yourself</h2>
+          <input type="file" name="you" accept="image/*" >
+          <br>
+          <button class="btn btn-dark my-4" name ="your" type="submit" >Submit</button>
+          <button type="submit" name="capture">Capture</button> 
+    </form>
+    Click the below button to capture the photo of yourself for virtual try-on
+    <div>
+    To save the image click s otherwise click q :
     </div>
+    {% comment %} <form method="post" enctype="multipart/form-data"> 
+        {% csrf_token %} 
+        <button type="submit" name="capture">Capture</button> 
+    </form>  {% endcomment %}
+</div>
 {% endblock body %} 
