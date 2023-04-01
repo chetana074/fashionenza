@@ -131,6 +131,9 @@ STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
 
+LOGIN_REDIRECT_URL = 'home' #redirect to home after login
+LOGIN_URL = '/' #redirect to welcome if not logged in
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
