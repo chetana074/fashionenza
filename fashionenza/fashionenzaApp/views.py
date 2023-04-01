@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.core.files.storage import FileSystemStorage
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from fashionenzaApp import imagecapture
 
@@ -55,23 +56,27 @@ def signin(request):
     if request.method == "GET":
         return render(request, 'signin.html')
 
+@login_required
 def signout(request):
     logout(request)
     return redirect('welcome')
 
+@login_required
 def home(request):
     if request.method == "GET":
         return render(request, 'home.html')
 
+@login_required
 def about(request):
     if request.method == "GET":
         return render(request, 'about.html')
 
+@login_required
 def contact(request):
     if request.method == "GET":
         return render(request, 'contact.html')
 
-
+@login_required
 def upload(request):
     if request.method=='POST'and 'your' in request.POST:
        upload=request.FILES['gar']
@@ -83,7 +88,7 @@ def upload(request):
         fss.save(up.name, up) 
     return render(request,'upload.html')
 
-
+@login_required
 def garments(request):
     return(request,'garments.html')
 
@@ -92,5 +97,6 @@ def garments(request):
 #         text = imagecapture.dummy()
 #     return render(request,'upload.html') 
 
+@login_required
 def userInfo(request):
     return render(request, 'userInfo.html')
