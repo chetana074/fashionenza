@@ -1,3 +1,4 @@
+import os
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -30,9 +31,8 @@ def signup(request):
             newUser.last_name = lname
             newUser.save()
             return redirect('signin')
-        
-    if request.method == "GET": 
-        return render(request, 'signup.html')
+    else : 
+        return redirect('signup')
 
 def signin(request):
     if request.method == "POST":
@@ -45,8 +45,6 @@ def signin(request):
             login(request, user)
             username = user.username
             fname = user.first_name
-            # print('loggedIn signin', loggedIn)
-            # return render(request, 'home.html', {'fname':fname, 'username':username, 'loggedIn':loggedIn})
             messages.success(request, "User loggedIn!!!")
             return redirect('home')
         else:
@@ -78,25 +76,50 @@ def contact(request):
 
 @login_required
 def upload(request):
-    if request.method=='POST'and 'your' in request.POST:
-       upload=request.FILES['gar']
-       fss=FileSystemStorage(location='Garment_by_user')
-       fss.save(upload.name, upload)
-    if request.method=='POST': 
-        up=request.FILES['you']
-        fss=FileSystemStorage(location='User_photo')
-        fss.save(up.name, up) 
-    return render(request,'upload.html')
+    if request.method=='POST' and 'your' in request.POST: 
+        garmentImg=request.FILES['gar']
+        clothImg=request.FILES['you']
+
+        ext1 = os.path.splitext(garmentImg.name)[1]
+        ext2 = os.path.splitext(clothImg.name)[1]
+
+        valid_extensions = ['.jpeg','.png','.jpg']
+
+        if (not ext1 in valid_extensions) or (not ext2 in valid_extensions):
+            messages.warning(request, "invalid file type")
+            return redirect('upload')
+        else :
+            clothImgSave=FileSystemStorage(location='garment')
+            clothImgSave.save(clothImg.name, clothImg)
+
+            garImgSave=FileSystemStorage(location='user')
+            garImgSave.save(garmentImg.name, garmentImg)
+
+            return render(request,'final.html')
+    else:
+        return render(request,'upload.html')
 
 @login_required
 def garments(request):
     return(request,'garments.html')
 
-# def upload(request):
-#     if request.method == 'POST' and 'capture' in request.POST: 
-#         text = imagecapture.dummy()
-#     return render(request,'upload.html') 
-
 @login_required
-def userInfo(request):
-    return render(request, 'userInfo.html')
+def final(request):
+    return render(request, 'final.html')
+
+def viton(model_img, cloth_img):
+    # run openpose on model_img
+    # output - openpose image of model_img
+
+    # run image parse
+    # generate h5 file and store in imageparse folder
+    # load that file here and run that file
+    # output - imageparse of model_img
+
+    # run cloth mask - run py file from Clothmask folder
+    # output - clothmask of cloth_img
+
+    # run viton file - test.py from viton folder
+    # viton contains everything - networks.py, test.py etc etc
+    # output - superimposed image
+    return 
