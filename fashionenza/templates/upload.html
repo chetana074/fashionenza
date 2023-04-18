@@ -5,7 +5,7 @@
 {% block body %} 
 <div class="container">
 
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" action="/upload">
       {% csrf_token %}
       <h2 class="my-4">Upload the image of garment</h2>
         <input type="file" name="gar" accept="image/x-png,image/gif,image/jpeg" >
